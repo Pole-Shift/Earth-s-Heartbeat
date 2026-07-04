@@ -1,0 +1,66 @@
+name: Build Earth's Heartbeat APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install SDK packages
+        run: |
+          yes | sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" || true
+
+      - name: Fetch real icon + splash (1.png)
+        run: |
+          set -e
+          sudo apt-get update -y && sudo apt-get install -y imagemagick
+          RES=app/src/main/res
+          # Pull the live logo; keep the committed placeholder if it fails
+          if curl -fsSL "https://pole-shift.observer/app2/1.png" -o /tmp/logo.png; then
+            echo "fetched live 1.png"
+            convert /tmp/logo.png -resize 48x48    "$RES/mipmap-mdpi/ic_launcher.png"
+            convert /tmp/logo.png -resize 72x72    "$RES/mipmap-hdpi/ic_launcher.png"
+            convert /tmp/logo.png -resize 96x96    "$RES/mipmap-xhdpi/ic_launcher.png"
+            convert /tmp/logo.png -resize 144x144  "$RES/mipmap-xxhdpi/ic_launcher.png"
+            convert /tmp/logo.png -resize 192x192  "$RES/mipmap-xxxhdpi/ic_launcher.png"
+            for d in mdpi hdpi xhdpi xxhdpi xxxhdpi; do
+              cp "$RES/mipmap-$d/ic_launcher.png" "$RES/mipmap-$d/ic_launcher_round.png"
+            done
+            convert /tmp/logo.png -resize 512x512  "$RES/drawable-nodpi/splash_logo.png"
+          else
+            echo "could not fetch 1.png — using committed placeholder icons"
+          fi
+
+      - name: Generate Gradle wrapper
+        run: gradle wrapper --gradle-version 8.9
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: Rename artifact
+        run: |
+          mkdir -p out
+          cp app/build/outputs/apk/debug/app-debug.apk "out/Earth's Heartbeat.apk"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: EarthsHeartbeat-apk
+          path: out/Earth's Heartbeat.apk
+          if-no-files-found: error

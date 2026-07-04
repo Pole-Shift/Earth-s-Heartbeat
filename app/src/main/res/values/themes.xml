@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Heartbeat" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:statusBarColor">@color/bg</item>
+        <item name="android:navigationBarColor">@color/bg</item>
+        <item name="android:windowBackground">@color/bg</item>
+    </style>
+
+    <style name="Theme.Heartbeat.Splash" parent="Theme.Heartbeat">
+        <item name="android:windowBackground">@color/bg</item>
+    </style>
+</resources>

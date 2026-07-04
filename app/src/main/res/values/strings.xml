@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Earth\'s Heartbeat</string>
+    <string name="splash_sub">GLOBAL RESONANCE UPLINK</string>
+    <string name="pick_feed_title">Choose a feed</string>
+    <string name="pick_feed_sub">Which Schumann / VLF signal should this widget show?</string>
+</resources>
