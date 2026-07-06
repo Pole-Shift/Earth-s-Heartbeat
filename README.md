@@ -1,55 +1,116 @@
-# Earth's Heartbeat
+# 🌍 Earth's Heartbeat
 
-An Android app + home-screen widget for the Schumann // ELF-VLF dashboard.
 
-- **App**: full-screen WebView of `https://pole-shift.observer/app2/index.html`,
-  auto-reloading every hour (the page also self-refreshes).
-- **Splash / icon**: uses `1.png` from the deployment (fetched during CI; a
-  matrix-themed placeholder is committed so the project builds without it).
-- **Widget**: pick *any* Schumann / VLF / geomagnetic feed to show on your home
-  screen. Each widget instance remembers its own choice and refreshes hourly via
-  WorkManager. Tap it to open the full dashboard. Images route through the same
-  `proxy.php` the dashboard uses, so the `http://` vlf.it / etna feeds load fine.
+**Earth's Heartbeat** is a simple Android application that brings together **Schumann Resonance** monitoring stations from around the world into one easy-to-use app.
 
-## Build the APK (recommended: GitHub Actions)
+View resonance charts from multiple observatories, monitor changes throughout the day, and place your favorite station directly on your Android home screen with customizable widgets.
 
-1. Create a repo and push this folder.
-2. The workflow in `.github/workflows/build.yml` runs on push. It:
-   - installs the Android SDK,
-   - downloads the live `1.png` and regenerates the launcher icon + splash,
-   - builds a debug APK,
-   - uploads it as the artifact **`EarthsHeartbeat-apk`** containing
-     **`Earth's Heartbeat.apk`**.
-3. Open the run → **Artifacts** → download → sideload onto your phone
-   (enable "install unknown apps").
+> ⚠️ **Current Status:** Beta Testing
 
-You can also trigger it manually from the **Actions** tab (**Run workflow**).
+---
 
-## Build locally
+## ✨ Features
 
-Requires Android Studio (Giraffe+) or a local Gradle + Android SDK.
+- 🌍 View Schumann Resonance data from multiple monitoring stations
+- 🇷🇺 Tomsk Schumann Resonance charts
+- 🇮🇹 Cumiana Schumann Resonance charts
+- 📈 Additional resonance sources will be added in future updates
+- 🔄 Automatically updates data every hour
+- 📱 Create Android home screen widgets
+- 🎯 Choose which Schumann Resonance station each widget displays
+- ⚡ Lightweight and easy to use
+- 🎨 Clean, modern interface
+
+---
+
+## 📱 Android Widgets
+
+Earth's Heartbeat includes built-in Android widgets.
+
+Simply:
+
+1. Long press your Android home screen.
+2. Select **Widgets**.
+3. Find **Earth's Heartbeat**.
+4. Place the widget.
+5. Choose the Schumann Resonance station you want displayed.
+
+Each widget updates automatically as new data becomes available.
+
+---
+
+## 📊 Data Sources
+
+Current supported monitoring stations include:
+
+- Tomsk, Russia
+- Cumiana, Italy
+
+Data is refreshed approximately **once every hour**, depending on source availability.
+
+---
+
+## 🚀 Installation
+
+Download the latest APK from the **Releases** page or build the project yourself.
+
+### Build
 
 ```bash
-# Android Studio: just "Open" this folder — it provisions the wrapper + SDK,
-# then Build > Build APK(s).
-
-# Or from the command line (SDK + gradle installed):
-gradle wrapper --gradle-version 8.9
-./gradlew assembleDebug
-# APK: app/build/outputs/apk/debug/app-debug.apk
+git clone https://github.com/Pole-Shift/Earth-s-Heartbeat.git
 ```
 
-To swap in the real logo locally, drop a square `1.png` into
-`app/src/main/res/drawable-nodpi/splash_logo.png` and the `mipmap-*/ic_launcher.png`
-files (or just let CI do it).
+Open the project in **Android Studio**, allow Gradle to sync, and build the APK.
 
-## Release build (optional)
+---
 
-For a Play-signed / distributable APK, add a keystore and a `signingConfig` in
-`app/build.gradle`, then `./gradlew assembleRelease`. The debug APK above is
-already installable for personal sideloading.
+## ⚠️ Beta Notice
 
-## Config
+Earth's Heartbeat is currently in **Beta**.
 
-Everything feed-related lives in `Feeds.kt` — labels, sources, URLs, and the
-proxy base. Edit there to add or reorder feeds.
+Although the application works out of the box, you may encounter:
+
+- Minor UI issues
+- Source outages
+- Feature changes
+- Performance improvements in future releases
+
+Bug reports and feature suggestions are always welcome.
+
+---
+
+## 🛣️ Planned Features
+
+- Additional Schumann Resonance monitoring stations
+- Faster refresh options
+- Push notifications for source outages
+- Favorite stations
+- Improved widget customization
+- Dark mode enhancements
+- Historical chart browsing
+
+---
+
+## 🤝 Contributing
+
+Contributions, bug reports, and feature requests are welcome.
+
+If you discover an issue or have an idea that would improve the app, feel free to open an Issue or submit a Pull Request.
+
+---
+
+## 📄 License
+
+This project is released under the MIT License.
+
+---
+
+## ⭐ Support
+
+If you enjoy this project, consider giving the repository a ⭐ on GitHub.
+
+It helps others discover the project and supports future development.
+
+---
+
+**Earth's Heartbeat** — Bringing Schumann Resonance monitoring from around the world to your Android device.
